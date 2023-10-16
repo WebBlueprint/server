@@ -9,19 +9,6 @@ const morgan = require('morgan') // 로그 확인을 위한 라이브러리
 
 const app = express();
 
-async function getSecret(secretName) {
-    try {
-
-    } catch (error) {
-        console.error('Error retrieving secret:', error);
-    }
-}
-
-// SECRET_KEY 로딩
-(async function() {
-    process.env.SECRET_KEY = await getSecret('MyAppSecretKey');
-})();
-
 // MongoDB 연결
 mongoose.connect(process.env.DB_CONNECT, {
     useNewUrlParser: true,
@@ -32,7 +19,7 @@ mongoose.connect(process.env.DB_CONNECT, {
 const user = require("./src/routes/user")
 
 // 앱 세팅
-app.set("views", "./src/views");
+app.set('views', `${__dirname}/src/views`);
 app.set('view engine', 'ejs'); // EJS 템플릿 엔진 사용
 
 // 미들 웨어 등록
