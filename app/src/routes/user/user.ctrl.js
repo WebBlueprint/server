@@ -17,7 +17,6 @@ const view = {
 
 const api = {
     login: async (req, res) => {
-        console.log(req.body);
         try {
             const user = await User.findOne({ username: req.body.username });
             if (!user) return res.status(400).json({ message: "아이디를 찾을 수 없습니다." });
