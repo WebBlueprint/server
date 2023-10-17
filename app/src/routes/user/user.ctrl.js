@@ -42,7 +42,7 @@ const api = {
             }
 
             // 비밀번호 유효성 검사: 영문 + 숫자, 최소 6글자
-            const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+            const passwordRegex =  /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
             if (!passwordRegex.test(password)) {
                 return res.status(400).json({ message: "비밀번호는 영문과 숫자를 포함하여 최소 6글자 이상이어야 합니다." });
             }
