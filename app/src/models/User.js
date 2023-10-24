@@ -30,7 +30,19 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     email: { type: String, required: true },
     role: { type: String, enum: ['customer', 'pro'] },
-    profileImage: String,
+    birthDate: {
+        type: Date,
+        required: true
+    },
+    gender: {
+        type: String,
+        enum: ['male', 'female', 'other'],
+        required: true
+    },
+    isPro: {
+        type: Boolean,
+        default: false
+    },
 
     // 고객 정보
     upcomingResv: [resvSchema],
@@ -40,6 +52,7 @@ const userSchema = new mongoose.Schema({
 
     // 프로 정보
     proDetails: {
+        profileImage: String,
         intro: String,
         exp: Number, // 경력 (년)
         certs: [String],

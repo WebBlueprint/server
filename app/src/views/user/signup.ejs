@@ -7,16 +7,37 @@
     <form action="/signup" method="post">
         <label for="username">Username:</label>
         <input type="text" name="username" required><br><br>
+
         <label for="email">E-mail:</label>
         <input type="email" name="email" required><br><br>
+
         <label for="password">Password:</label>
         <input type="password" name="password" required><br><br>
-        <label for="confirmPassword ">Confirm Password:</label>
+
+        <label for="confirmPassword">Confirm Password:</label>
         <input type="password" name="confirmPassword" required><br><br>
+
+        <!-- 생년월일 입력 추가 -->
+        <label for="birthDate">Birth Date (YYYY-MM-DD):</label>
+        <input type="date" name="birthDate" required><br><br>
+
+        <!-- 성별 선택 추가 -->
+        <label for="gender">Gender:</label>
+        <select name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select><br><br>
+
+        <!-- 프로 여부 체크박스 추가 -->
+        <label for="isPro">Are you a Pro?</label>
+        <input type="checkbox" name="isPro" value="true"><br><br>
+
         <input type="submit" value="Signup">
     </form>
+
     <% if (typeof message !== 'undefined') { %>
         <p><%= message %></p>
-      <% } %>
-    </body>
+    <% } %>
+</body>
 </html>
