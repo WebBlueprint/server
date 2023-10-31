@@ -12,3 +12,9 @@ $ npm install
 $ npm start
 ```
 
+### Environment Variables
+```
+PORT=3000
+DB_CONNECT=mongodb+srv://[username]:[password]@cluster0.mongodb.net/golfManager?retryWrites=true&w=majority
+SECRET_KEY=secret_key
+```
