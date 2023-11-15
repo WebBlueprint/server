@@ -5,7 +5,16 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./bin/www.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dummy:pros": "node ./scripts/createDummyPros.js",
+    "dummy:reviews": "node ./scripts/createDummyProReviews.js",
+    "dummy:golfCourses": "node ./scripts/createDummyGolfCourses.js",
+    "dummy:chats": "node ./scripts/createDummyChats.js",
+    "dummy:reservations": "node ./scripts/createDummyReservations.js",
+    "dummy:lessons": "node ./scripts/createDummyLessons.js",
+    "dummy:courseReviews": "node ./scripts/createDummyCourseReviews.js",
+    "dummy:groupLessons": "node ./scripts/createDummyGroupLessons.js",
+    "dummy:groupLessonParticipants": "node ./scripts/createDummyGroupLessonParticipants.js"
   },
   "author": "",
   "license": "ISC",

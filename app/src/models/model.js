@@ -104,7 +104,6 @@ const golfCourseSchema = new mongoose.Schema({
     name: String,
     address: String,
     map_link: String,
-    pro_details: String,
     phone: String,
     reviews_count: Number,
     rating: Number,
