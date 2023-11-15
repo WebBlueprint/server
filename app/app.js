@@ -17,6 +17,7 @@ mongoose.connect(process.env.DB_CONNECT, {
 
 // 라우팅
 const user = require("./src/routes/user")
+const pro = require("./src/routes/pro")
 
 // 앱 세팅
 app.set('views', `${__dirname}/src/views`);
@@ -29,5 +30,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use("/", user);
+app.use("/", pro);
 
 module.exports = app;
