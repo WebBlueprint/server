@@ -10,11 +10,11 @@ mongoose.connect(process.env.DB_CONNECT, {
 
 const createDummyPros = async () => {
     const dummyPros = [
-        { email: "pro1@example.com", password: "password1", birth_date: new Date(1980, 0, 1), gender: "male", address: "123", height: 180, weight: 70, phone: "010-1234-5678" },
-        { email: "pro2@example.com", password: "password2", birth_date: new Date(1985, 5, 15), gender: "female", address: "456", height: 165, weight: 60, phone: "010-2345-6789" },
-        { email: "pro3@example.com", password: "password3", birth_date: new Date(1990, 10, 20), gender: "male", address: "789", height: 175, weight: 75, phone: "010-3456-7890" },
-        { email: "pro4@example.com", password: "password4", birth_date: new Date(1975, 2, 28), gender: "female", address: "101", height: 170, weight: 65, phone: "010-4567-8901" },
-        { email: "pro5@example.com", password: "password5", birth_date: new Date(1982, 8, 5), gender: "male", address: "202", height: 182, weight: 78, phone: "010-5678-9012" }
+        { name: "홍길동", email: "pro1@example.com", password: "password1", birth_date: new Date(1980, 0, 1), gender: "male", address: "123", height: 180, weight: 70, phone: "010-1234-5678" },
+        { name: "김프로", email: "pro2@example.com", password: "password2", birth_date: new Date(1985, 5, 15), gender: "female", address: "456", height: 165, weight: 60, phone: "010-2345-6789" },
+        { name: "강프로", email: "pro3@example.com", password: "password3", birth_date: new Date(1990, 10, 20), gender: "male", address: "789", height: 175, weight: 75, phone: "010-3456-7890" },
+        { name: "프로", email: "pro4@example.com", password: "password4", birth_date: new Date(1975, 2, 28), gender: "female", address: "101", height: 170, weight: 65, phone: "010-4567-8901" },
+        { name: "김민수", email: "pro5@example.com", password: "password5", birth_date: new Date(1982, 8, 5), gender: "male", address: "202", height: 182, weight: 78, phone: "010-5678-9012" }
     ];
 
     try {

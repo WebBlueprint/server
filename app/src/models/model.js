@@ -19,6 +19,7 @@ const User = mongoose.model('User', userSchema);
 
 // Pro Schema
 const proSchema = new mongoose.Schema({
+    name: String,
     email: String,
     password: String,
     birth_date: Date,

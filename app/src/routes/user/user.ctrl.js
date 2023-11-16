@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const view = {
     home: (req, res) => {
-        res.send("메인화면");
+        res.render("user/home");
     },
     login: (req, res) => {
         res.render("user/login");
