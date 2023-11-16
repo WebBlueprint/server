@@ -24,13 +24,22 @@ const api = {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
 
+            // 주소를 GeoJSON 형식으로 변환
+            let geoAddress;
+            if (address && address.coordinates && address.coordinates.length === 2) {
+                geoAddress = {
+                    type: "Point",
+                    coordinates: address.coordinates // [경도, 위도]
+                };
+            }
+
             // 데이터 저장
             pro = new Pro({
                 email,
                 password: hashedPassword,
                 birth_date,
                 gender,
-                address,
+                address: geoAddress, // GeoJSON 형식의 주소
                 height,
                 weight,
                 phone,
@@ -44,6 +53,7 @@ const api = {
         }
     }
 }
+
 
 module.exports = {
     view,

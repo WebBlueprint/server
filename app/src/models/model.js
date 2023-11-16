@@ -8,13 +8,28 @@ const userSchema = new mongoose.Schema({
     password: String,
     birth_date: Date,
     gender: String,
-    address: String,
+    // GeoJSON 형식으로 위치 데이터를 저장
+    address: {
+        type: {
+            type: String, // 'Point' 고정
+            enum: ['Point'], // 'address.type'은 'Point'만 가능
+            required: false
+        },
+        coordinates: {
+            type: [Number], // [경도, 위도] 형식의 배열
+            required: false
+        }
+    },
     phone: String,
     created_date: {
         type: Date,
         default: Date.now
     }
 });
+
+// GeoJSON 인덱스 생성
+userSchema.index({ location: '2dsphere' });
+
 const User = mongoose.model('User', userSchema);
 
 // Pro Schema
@@ -24,7 +39,18 @@ const proSchema = new mongoose.Schema({
     password: String,
     birth_date: Date,
     gender: String,
-    address: String,
+    // GeoJSON 형식으로 위치 데이터 저장
+    address: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: false
+        },
+        coordinates: {
+            type: [Number],
+            required: false
+        }
+    },
     height: Number,
     weight: Number,
     phone: String,
@@ -38,7 +64,12 @@ const proSchema = new mongoose.Schema({
         default: Date.now
     }
 });
+
+// GeoJSON 인덱스 생성
+proSchema.index({ address: '2dsphere' });
+
 const Pro = mongoose.model('Pro', proSchema);
+
 
 // Reservation Schema
 const reservationSchema = new mongoose.Schema({
@@ -60,6 +91,7 @@ const reservationSchema = new mongoose.Schema({
 });
 const Reservation = mongoose.model('Reservation', reservationSchema);
 
+
 // Lesson Schema
 const lessonSchema = new mongoose.Schema({
     reservation_id: {
@@ -79,6 +111,7 @@ const lessonSchema = new mongoose.Schema({
     }
 });
 const Lesson = mongoose.model('Lesson', lessonSchema);
+
 
 // Chat Schema
 const chatSchema = new mongoose.Schema({
@@ -100,10 +133,22 @@ const chatSchema = new mongoose.Schema({
 });
 const Chat = mongoose.model('Chat', chatSchema);
 
+
 // Golf Course Schema
 const golfCourseSchema = new mongoose.Schema({
     name: String,
-    address: String,
+    // GeoJSON 형식으로 위치 데이터 저장, 필수로 설정
+    address: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
     map_link: String,
     phone: String,
     reviews_count: Number,
@@ -113,7 +158,12 @@ const golfCourseSchema = new mongoose.Schema({
         default: Date.now
     }
 });
+
+// GeoJSON 인덱스 생성
+golfCourseSchema.index({ address: '2dsphere' });
+
 const GolfCourse = mongoose.model('GolfCourse', golfCourseSchema);
+
 
 // Pro Review Schema
 const proReviewSchema = new mongoose.Schema({

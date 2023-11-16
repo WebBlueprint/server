@@ -18,7 +18,6 @@ router.get('/', async (req, res) => {
         }));
 
 
-
         // 평균 점수와 리뷰 수를 기준으로 정렬
         const sortedPros = proStats.sort((a, b) => {
             if (b.averageRating === a.averageRating) {
@@ -29,7 +28,6 @@ router.get('/', async (req, res) => {
 
         // 상위 5명의 프로 추출
         const topPros = sortedPros.slice(0, 5);
-        console.log(topPros); // 반환되는 데이터 로그 출력
 
         res.json(topPros);
     } catch (error) {

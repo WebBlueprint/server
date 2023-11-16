@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon ./bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dummy:users": "node ./scripts/createDummyUsers.js",
     "dummy:pros": "node ./scripts/createDummyPros.js",
     "dummy:reviews": "node ./scripts/createDummyProReviews.js",
     "dummy:golfCourses": "node ./scripts/createDummyGolfCourses.js",
