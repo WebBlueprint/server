@@ -20,11 +20,11 @@ async function createDummyReservations() {
         }
 
         const reservations = [
-            { user_id: userIds[0], pro_id: proIds[0], date: new Date(), duration: 60, status: 'confirmed', created_date: new Date() },
-            { user_id: userIds[1], pro_id: proIds[1], date: new Date(), duration: 45, status: 'pending', created_date: new Date() },
-            { user_id: userIds[2], pro_id: proIds[2], date: new Date(), duration: 30, status: 'cancelled', created_date: new Date() },
-            { user_id: userIds[3], pro_id: proIds[3], date: new Date(), duration: 90, status: 'confirmed', created_date: new Date() },
-            { user_id: userIds[4], pro_id: proIds[4], date: new Date(), duration: 120, status: 'pending', created_date: new Date() }
+            { user_id: userIds[0], pro_id: proIds[0], date: new Date(), duration: 60, status: 'confirmed', created_date: new Date(), remainingSessions:5},
+            { user_id: userIds[1], pro_id: proIds[1], date: new Date(), duration: 45, status: 'pending', created_date: new Date(), remainingSessions:5},
+            { user_id: userIds[2], pro_id: proIds[2], date: new Date(), duration: 30, status: 'cancelled', created_date: new Date(), remainingSessions:5},
+            { user_id: userIds[3], pro_id: proIds[3], date: new Date(), duration: 90, status: 'confirmed', created_date: new Date(), remainingSessions:5},
+            { user_id: userIds[4], pro_id: proIds[4], date: new Date(), duration: 120, status: 'pending', created_date: new Date(), remainingSessions:5 }
         ];
 
         for (const reservationData of reservations) {

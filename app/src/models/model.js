@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 // User Schema
 const userSchema = new mongoose.Schema({
+    user_id: String,
     email: String,
     password: String,
     birth_date: Date,
@@ -87,6 +88,11 @@ const reservationSchema = new mongoose.Schema({
     created_date: {
         type: Date,
         default: Date.now
+    },
+    remainingSessions: {
+        type: Number,
+        required: true,
+        default: 0 // 기본값 설정
     }
 });
 const Reservation = mongoose.model('Reservation', reservationSchema);

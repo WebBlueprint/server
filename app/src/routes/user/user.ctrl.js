@@ -18,7 +18,7 @@ const view = {
 const api = {
     login: async (req, res) => {
         try {
-            const user = await User.findOne({ username: req.body.username });
+            const user = await User.findOne({ user_id: req.body.user_id });
             if (!user) return res.status(400).json({ message: "아이디를 찾을 수 없습니다." });
     
             const validPassword = await bcrypt.compare(req.body.password, user.password);
@@ -33,7 +33,7 @@ const api = {
     signup: async (req, res) => {
         try {
             // 입력 검증
-            const { username, email, password, confirmPassword, birthDate, gender, isPro } = req.body;
+            const { user_id, email, password, confirmPassword, birthDate, gender, isPro } = req.body;
     
             // 이메일 형식 검사
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -67,7 +67,7 @@ const api = {
             const isProBoolean = isPro === 'true';
     
             // 중복 검사
-            let user = await User.findOne({ username });
+            let user = await User.findOne({ user_id });
             if (user) {
                 return res.status(400).json({ message: "이미 존재하는 사용자 이름입니다." });
             }
@@ -82,7 +82,7 @@ const api = {
     
             // 데이터 저장
             user = new User({
-                username,
+                user_id,
                 email,
                 password: hashedPassword,
                 birthDate,
