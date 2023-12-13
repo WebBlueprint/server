@@ -30,4 +30,22 @@ router.use('/schedule/user-info', scheduleUserInfo);
 router.use('/schedule/lesson-info', scheduleLessonInfo);
 router.use('/schedule/pro-reviews', proReviewRoutes);
 
+// 예약완료 페이지 라우트
+const completedReservation = require('./completedReservation');
+
+router.use('/completed-reservation', completedReservation);
+
+// 세팅 페이지 라우트
+const settingUserInfo = require('./setting/userInfo');
+const settingMyProProfile = require('./setting/myProProfile');
+const settingUserEdit = require('./setting/userEdit');
+const settingChangePassword = require('./setting/changePassword');
+const settingMySlot = require('./setting/mySlot');
+
+router.use('/setting/user-info', settingUserInfo);
+router.use('/setting/my-pro-profile', settingMyProProfile);
+router.use('/setting/user-edit', settingUserEdit);
+router.use('/setting/change-password', settingChangePassword);
+router.use('/setting/my-slot', settingMySlot);
+
 module.exports = router;
