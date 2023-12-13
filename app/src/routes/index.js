@@ -48,4 +48,21 @@ router.use('/setting/user-edit', settingUserEdit);
 router.use('/setting/change-password', settingChangePassword);
 router.use('/setting/my-slot', settingMySlot);
 
+// 레슨 페이지 라우트
+const myProListRouter = require('./lesson/myProList');
+const makeReviewRouter = require('./lesson/makeReview');
+const myDrivingRangeRouter = require('./lesson/myDrivingRange');
+const groupLessonsRouter = require('./lesson/groupLessons');
+const personalLessonsRouter = require('./lesson/personalLessons');
+const lessonReviewsRouter = require('./lesson/lessonReviews');
+const sendLessonReviewRouter = require('./lesson/sendLessonReview');
+
+router.use('/lesson/my-pro-list', myProListRouter);
+router.use('/lesson/make-review', makeReviewRouter);
+router.use('/lesson/my-driving-range', myDrivingRangeRouter);
+router.use('/lesson/group-lessons', groupLessonsRouter);
+router.use('/lesson/personal-lessons', personalLessonsRouter);
+router.use('/lesson/lesson-reviews', lessonReviewsRouter);
+router.use('/lesson/send-lesson-review', sendLessonReviewRouter);
+
 module.exports = router;
