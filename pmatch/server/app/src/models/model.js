@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
     password: String,
     birth_date: Date,
     gender: String,
-    // GeoJSON 형식으로 위치 데이터를 저장
     address: {
         type: {
             type: String, // 'Point' 고정
@@ -21,12 +20,17 @@ const userSchema = new mongoose.Schema({
             required: false
         }
     },
-    phone: String,
+    phone_num: String,
+    photo: { // 유저 사진 URL
+        type: String,
+        required: false
+    },
     created_date: {
         type: Date,
         default: Date.now
     }
 });
+
 
 // GeoJSON 인덱스 생성
 userSchema.index({ location: '2dsphere' });

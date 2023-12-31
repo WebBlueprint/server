@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const {User} = require('../../models/model');
+const { User } = require('../../models/model');
 
 // 유저 정보를 수정하는 API
-router.put('/', async (req, res) => {
+router.put('/:userId', async (req, res) => {
     try {
-        // 유저 정보 추출
-        const { userId, email, phone, address } = req.body;
+        // URL 파라미터에서 유저 ID 추출
+        const { userId } = req.params;
+        const { email, phone, address } = req.body;
 
         // 해당 유저 ID를 가진 유저 찾기
         const user = await User.findOne({ user_id: userId });
@@ -14,10 +15,10 @@ router.put('/', async (req, res) => {
             return res.status(404).send('User not found');
         }
 
-        // 유저 정보 업데이트
-        user.email = email || user.email;
-        user.phone = phone || user.phone;
-        user.address = address || user.address;
+        // 유저 정보 업데이트 (제공된 경우에만)
+        if (email) user.email = email;
+        if (phone) user.phone = phone;
+        if (address) user.address = address;
 
         await user.save();
 
