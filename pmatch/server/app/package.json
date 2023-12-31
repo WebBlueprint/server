@@ -14,8 +14,7 @@
     "dummy:reservations": "node ./scripts/createDummyReservations.js",
     "dummy:lessons": "node ./scripts/createDummyLessons.js",
     "dummy:courseReviews": "node ./scripts/createDummyCourseReviews.js",
-    "dummy:groupLessons": "node ./scripts/createDummyGroupLessons.js",
-    "dummy:groupLessonParticipants": "node ./scripts/createDummyGroupLessonParticipants.js"
+    "dummy:groupLessons": "node ./scripts/createDummyGroupLessons.js"
   },
   "author": "",
   "license": "ISC",

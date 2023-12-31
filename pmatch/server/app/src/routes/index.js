@@ -2,12 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const searchRoutes = require('./search');
-const popularProsRoutes = require('./popularPros');
 const nearestGolfCourseRoutes = require('./nearestGolfcourse');
 
 // 기존 라우트
 router.use('/search', searchRoutes);
-router.use('/popular-pros', popularProsRoutes);
 router.use('/nearest-golfcourse', nearestGolfCourseRoutes);
 
 // 메인 페이지 라우트

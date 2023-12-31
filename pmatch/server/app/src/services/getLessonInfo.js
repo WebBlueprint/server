@@ -25,7 +25,7 @@ const getLessonInfo = async () => {
                 proName: pro.name, // 프로 이름
                 lessonPlace: reservation.place, // 레슨 장소
                 lessonDateTime: reservation.reservation_date, // 레슨 날짜 및 시간
-                remainingSessions: reservation.remainingSessions // 남은 횟수
+                remaining_lesson: reservation.remaining_lesson // 남은 횟수
             };
         });
 

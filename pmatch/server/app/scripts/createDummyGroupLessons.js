@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-const { GroupLesson, Pro, GolfCourse } = require('../src/models/model');
+const { GroupLesson, Pro, GolfCourse, User } = require('../src/models/model');
 
 mongoose.connect(process.env.DB_CONNECT, {
     useNewUrlParser: true,
@@ -15,14 +15,44 @@ async function createDummyGroupLessons() {
         const courses = await GolfCourse.find({}).select('_id');
         const courseIds = courses.map(course => course._id);
 
-        if (proIds.length < 5 || courseIds.length < 5) {
-            throw new Error('Not enough pros or courses to create dummy group lessons');
+        const users = await User.find({}).select('_id');
+        const userIds = users.map(user => user._id);
+
+        if (proIds.length < 3 || courseIds.length < 3 || userIds.length < 3) {
+            throw new Error('Not enough pros, courses, or users to create dummy group lessons');
         }
 
         const groupLessons = [
-            { pro_id: proIds[0], course_id: courseIds[0], title: 'Beginner Golf Clinic', description: 'Learn the basics of golf.', max_participants: 10, date: new Date(), duration: 120 },
-            { pro_id: proIds[1], course_id: courseIds[1], title: 'Intermediate Skills Workshop', description: 'Improve your swing and putting.', max_participants: 8, date: new Date(), duration: 90 },
-            { pro_id: proIds[2], course_id: courseIds[2], title: 'Advanced Golf Strategies', description: 'For experienced players looking to refine their game.', max_participants: 6, date: new Date(), duration: 180 },
+            { 
+                pro_id: proIds[0], 
+                location: courseIds[0], 
+                reservation_time: new Date(), 
+                status: 'Scheduled',
+                participants_count: 5,
+                participants: userIds.slice(0, 5),
+                remaining_lesson: 10, 
+                duration: 120 
+            },
+            { 
+                pro_id: proIds[1], 
+                location: courseIds[1], 
+                reservation_time: new Date(), 
+                status: 'Scheduled',
+                participants_count: 8,
+                participants: userIds.slice(0, 8),
+                remaining_lesson: 8, 
+                duration: 90 
+            },
+            { 
+                pro_id: proIds[2], 
+                location: courseIds[2], 
+                reservation_time: new Date(), 
+                status: 'Scheduled',
+                participants_count: 6,
+                participants: userIds.slice(0, 6),
+                remaining_lesson: 6, 
+                duration: 180 
+            },
         ];
 
         for (const lessonData of groupLessons) {

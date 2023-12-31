@@ -1,42 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const {Lesson} = require('../../models/model');
-const {Pro} = require('../../models/model');
-const {Reservation} = require('../../models/model');
+const { Reservation, User } = require('../../models/model');
 
 // PersonalLessons 정보를 조회하는 API
-router.get('/', async (req, res) => {
+router.get('/:userId', async (req, res) => {
     try {
-        if (!req.user) {
-            return res.status(401).send('User not authenticated');
-        }
-        
-        // 현재 로그인한 유저의 ID를 사용
-        const userId = req.user._id; // 현재 로그인한 유저의 ID
+        // URL 파라미터에서 유저 ID 추출
+        const { userId } = req.params;
 
-        // 해당 유저와 관련된 개인 레슨 정보 조회
-        const personalLessons = await Lesson.find({ 'reservation_id.user_id': userId })
-            .populate({
-                path: 'reservation_id',
-                populate: {
-                    path: 'pro_id',
-                    model: 'Pro'
-                }
-            });
+        // 해당 유저 ID를 가진 유저 찾기
+        const user = await User.findOne({ user_id: userId });
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // 해당 유저의 개인 레슨 정보 조회
+        const personalLessons = await Reservation.find({ user_id: user._id })
+            .populate('pro_id')
+            .populate('place');
 
         // 데이터 포맷팅
         const formattedPersonalLessons = personalLessons.map(lesson => {
-            const reservation = lesson.reservation_id;
-            const pro = reservation.pro_id;
-
             return {
-                proName: pro.name, // 프로 이름
-                location: reservation.place, // 위치
-                date: reservation.reservation_date, // 날짜
-                time: reservation.time, // 시간
-                remainingLessons: reservation.remainingSessions, // 남은 레슨 수
-                upcoming: true // 다가오는 레슨 여부
-                // 추가적인 정보 필요 시 여기에 포함
+                proName: lesson.pro_id.name, // 프로 이름
+                location: lesson.place.name, // 위치
+                date: lesson.reservation_date, // 날짜
+                remaining_lesson: lesson.remaining_lesson, // 남은 레슨 수
+                status: lesson.status // 다가오는 레슨 여부
             };
         });
 

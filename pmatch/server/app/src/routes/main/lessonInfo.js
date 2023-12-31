@@ -34,7 +34,7 @@ router.get('/:userId', async (req, res) => {
                 proName: pro.name, // 프로 이름
                 golfCourseName: pro.golf_course_id.name, // 골프 코스 이름
                 lessonDateTime: reservation.reservation_date, // 레슨 날짜 및 시간
-                remainingSessions: reservation.remainingSessions // 남은 횟수
+                remaining_lesson: reservation.remaining_lesson // 남은 횟수
             };
         }));
 
