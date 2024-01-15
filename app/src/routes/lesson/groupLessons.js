@@ -2,20 +2,22 @@ const express = require('express');
 const router = express.Router();
 const {GroupLesson} = require('../../models/model');
 const {Pro} = require('../../models/model');
+const {User} = require('../../models/model');
 const {Reservation} = require('../../models/model');
 
 // GroupLessons 정보를 조회하는 API
-router.get('/', async (req, res) => {
+router.get('/:userId', async (req, res) => {
     try {
-        if (!req.user) {
-            return res.status(401).send('User not authenticated');
+        const user_Id = req.params.userId; // URL 경로에서 userId 추출
+
+        // 먼저 사용자 정보 조회
+        const user = await User.findOne({ user_id: user_Id });
+        if (!user) {
+            return res.status(404).send('User not found');
         }
-        
-        // 현재 로그인한 유저의 ID를 사용
-        const userId = req.user._id; // 현재 로그인한 유저의 ID
 
         // 해당 유저와 관련된 그룹 레슨 정보 조회
-        const groupLessons = await GroupLesson.find({ 'participants.user_id': userId })
+        const groupLessons = await GroupLesson.find({ 'participants.user_id': user })
             .populate('pro_id')
             .populate('reservation_id');
 

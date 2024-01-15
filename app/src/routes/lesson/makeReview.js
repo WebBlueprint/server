@@ -8,24 +8,20 @@ const { User } = require('../../models/model');
 // 리뷰를 작성하는 API
 router.post('/', async (req, res) => {
     try {
-        const { proId, userId, star, comment } = req.body;
+        const { proName, userId, star, comment } = req.body;
 
-        // proId와 userId가 유효한 ObjectId인지 확인
-        if (!mongoose.Types.ObjectId.isValid(proId) || !mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).send('Invalid Pro ID or User ID');
-        }
+        // Pro 이름과 User ID를 사용하여 각각의 ObjectId 찾기
+        const pro = await Pro.findOne({ name: proName });
+        const user = await User.findOne({ user_id: userId });
 
-        // Pro와 User가 실제로 존재하는지 확인
-        const proExists = await Pro.findById(proId);
-        const userExists = await User.findById(userId);
-        if (!proExists || !userExists) {
+        if (!pro || !user) {
             return res.status(404).send('Pro or User not found');
         }
 
         // 새로운 리뷰 생성
         const newReview = new ProReview({
-            pro_id: proId,
-            user_id: userId,
+            pro_id: pro._id,  // Pro의 ObjectId 사용
+            user_id: user._id, // User의 ObjectId 사용
             rating: star,
             feedback: comment
         });

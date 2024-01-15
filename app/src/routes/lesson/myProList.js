@@ -1,20 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const {Pro} = require('../../models/model'); 
+const {User} = require('../../models/model'); 
 const {Reservation} = require('../../models/model');
 const {GolfCourse} = require('../../models/model');
 
 // My Pro List 정보를 조회하는 API
-router.get('/', async (req, res) => {
+router.get('/:userId', async (req, res) => {
     try {
-        if (!req.user) {
-            return res.status(401).send('User not authenticated');
-        }
-                
-        const userId = req.user._id; // 현재 로그인한 유저의 ID
+        const userId = req.params.userId; // URL 경로에서 userId 추출
 
-        // 해당 유저와 관련된 예약 정보 조회
-        const reservations = await Reservation.find({ user_id: userId })
+        // 먼저 사용자 정보 조회
+        const user = await User.findOne({ user_id: userId });
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // 사용자의 MongoDB ID를 사용하여 예약 정보 조회
+        const reservations = await Reservation.find({ user_id: user._id })
             .populate({
                 path: 'pro_id',
                 model: 'Pro',
@@ -23,7 +25,6 @@ router.get('/', async (req, res) => {
                     model: 'GolfCourse'
                 }
             });
-
         // 데이터 포맷팅
         const proList = reservations.map(reservation => {
             const pro = reservation.pro_id;
