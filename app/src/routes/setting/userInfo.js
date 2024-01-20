@@ -6,14 +6,14 @@ const {User} = require('../../models/model');
 router.get('/', async (req, res) => {
     try {
         // 유저 정보 조회
-        const users = await User.find({}, 'image user_id location gender');
+        const users = await User.find({}, 'user_id gender address photo');
 
         // 데이터 포맷팅 
         const formattedUsers = users.map(user => ({
-            image: user.image,
-            name: user.user_id,
-            location: user.location,
-            gender: user.gender
+            user_id: user.user_id,
+            gender: user.gender,
+            address: user.address,
+            photo : user.photo
         }));
 
         res.json(formattedUsers);

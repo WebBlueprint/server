@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const {User} = require('../../models/model');
+const { User } = require('../../models/model');
 const bcrypt = require('bcrypt'); // 비밀번호 해싱을 위한 bcrypt
 
 // 유저 비밀번호를 변경하는 API
-router.put('/', async (req, res) => {
+router.put('/:userId', async (req, res) => {
     try {
-        const { userId, currentPassword, newPassword, confirmPassword } = req.body;
+        // URL 파라미터에서 유저 ID 추출
+        const { userId } = req.params;
+        const { currentPassword, newPassword, confirmPassword } = req.body;
 
         // 해당 유저 ID를 가진 유저 찾기
         const user = await User.findOne({ user_id: userId });

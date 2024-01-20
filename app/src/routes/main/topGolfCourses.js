@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {GolfCourse} = require('../../models/model');
-const {CourseReview} = require('../../models/model');
+const { GolfCourse, CourseReview } = require('../../models/model');
 
 // 인기 Top 5 골프장 정보를 조회하는 API
 router.get('/', async (req, res) => {
@@ -9,20 +8,20 @@ router.get('/', async (req, res) => {
         // 모든 골프장 정보 조회
         const golfCourses = await GolfCourse.find({});
 
-        // 각 골프장의 평균 평점 계산
-        const golfCourseRatings = await Promise.all(golfCourses.map(async (course) => {
+        // 각 골프장의 평균 평점 및 위치 정보 계산
+        const golfCourseDetails = await Promise.all(golfCourses.map(async (course) => {
             const reviews = await CourseReview.find({ course_id: course._id });
-            const averageRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
 
             return {
                 courseName: course.name,
-                courseRating: averageRating || 0, // 리뷰가 없는 경우 0으로 처리
-                courseReviews: reviews.length
+                courseLocation: course.address, // 위치 정보 추가
+                courseRating: course.average_rating, // 평균 평점
+                courseReviews: reviews.length // 리뷰 개수
             };
         }));
 
         // 평점으로 정렬하고 상위 5개만 선택
-        const topGolfCourses = golfCourseRatings.sort((a, b) => b.courseRating - a.courseRating).slice(0, 5);
+        const topGolfCourses = golfCourseDetails.sort((a, b) => b.courseRating - a.courseRating).slice(0, 5);
 
         res.json(topGolfCourses);
     } catch (error) {

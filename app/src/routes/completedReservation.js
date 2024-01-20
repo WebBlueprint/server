@@ -24,14 +24,14 @@ router.get('/', async (req, res) => {
 
             // Pro 객체가 null인 경우를 처리
             if (!pro) {
-                return null; // 또는 적절한 기본값 설정
+                return null; // 기본값 설정
             }
 
             return {
                 proName: pro.name, // 프로 이름
                 lessonPlace: reservation.place, // 레슨 장소
                 lessonDateTime: reservation.time, // 레슨 날짜 및 시간
-                remainingSessions: reservation.remainingSessions // 남은 횟수
+                remaining_lesson: reservation.remaining_lesson // 남은 횟수
             };
         });
 

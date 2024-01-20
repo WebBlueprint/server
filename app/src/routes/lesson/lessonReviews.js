@@ -5,17 +5,19 @@ const {Pro} = require('../../models/model');
 const {User} = require('../../models/model');
 
 // 레슨 리뷰 정보를 조회하는 API
-router.get('/', async (req, res) => {
+router.get('/:proId', async (req, res) => {
     try {
-        if (!req.user) {
-            return res.status(401).send('User not authenticated');
+        // URL 파라미터에서 프로 ID 추출
+        const { proId } = req.params;
+
+        // 해당 프로 ID를 가진 프로 찾기
+        const pro = await Pro.findOne({ pro_id: proId });
+        if (!pro) {
+            return res.status(404).send('User not found');
         }
-        
-        // 현재 로그인한 프로의 ID를 사용
-        const proId = req.user._id; // 현재 로그인한 프로의 ID
 
         // 해당 프로에 대한 리뷰 정보 조회
-        const reviews = await ProReview.find({ pro_id: proId })
+        const reviews = await ProReview.find({ pro_id: pro })
             .populate('user_id', 'name'); // 유저 이름 포함
 
         // 데이터 포맷팅

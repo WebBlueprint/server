@@ -8,7 +8,7 @@ const getUserInfo = async () => {
         // 데이터 포맷팅 
         const formattedUsers = users.map(user => ({
             userId: user.user_id,
-            location: user.address.coordinates, // 실제 주소로 변환 (추후작업)
+            location: user.address.coordinates,
             gender: user.gender
         }));
 

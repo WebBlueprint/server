@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
     password: String,
     birth_date: Date,
     gender: String,
-    // GeoJSON 형식으로 위치 데이터를 저장
     address: {
         type: {
             type: String, // 'Point' 고정
@@ -21,12 +20,17 @@ const userSchema = new mongoose.Schema({
             required: false
         }
     },
-    phone: String,
+    phone_num: String,
+    photo: { // 유저 사진 URL
+        type: String,
+        required: false
+    },
     created_date: {
         type: Date,
         default: Date.now
     }
 });
+
 
 // GeoJSON 인덱스 생성
 userSchema.index({ location: '2dsphere' });
@@ -35,6 +39,7 @@ const User = mongoose.model('User', userSchema);
 
 // Pro Schema
 const proSchema = new mongoose.Schema({
+    pro_id: String,
     name: String,
     email: String,
     password: String,
@@ -60,6 +65,10 @@ const proSchema = new mongoose.Schema({
         ref: 'GolfCourse',
         required: false
     },
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ProReview'
+    }],
     created_date: {
         type: Date,
         default: Date.now
@@ -82,14 +91,23 @@ const reservationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Pro'
     },
-    time: Date,
     reservation_date: Date,
-    place: String,
+    duration: {
+        type: Number,
+        required: true,
+        default: 60 // 기본값 설정
+    },
+    place: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'GolfCourse',
+        required: false
+    },
+    status: String,
     created_date: {
         type: Date,
         default: Date.now
     },
-    remainingSessions: {
+    remaining_lesson: {
         type: Number,
         required: true,
         default: 0 // 기본값 설정
@@ -105,8 +123,8 @@ const lessonSchema = new mongoose.Schema({
         ref: 'Reservation'
     },
     content: String,
-    image: String,
-    video: String,
+    image: [String],
+    video: [String],
     duration: Number,
     strokes: Number,
     club: String,
@@ -158,7 +176,7 @@ const golfCourseSchema = new mongoose.Schema({
     map_link: String,
     phone: String,
     reviews_count: Number,
-    rating: Number,
+    average_rating: Number,
     created_date: {
         type: Date,
         default: Date.now
@@ -215,9 +233,22 @@ const groupLessonSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Pro'
     },
-    reservation_id: {
+    // 예약 시간 및 장소
+    reservation_time: Date,
+    location: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Reservation'
+        ref: 'GolfCourse'
+    },
+    // 그룹 레슨 상태
+    status: {
+        type: String,
+        required: true
+    },
+    // 참가자 수
+    participants_count: {
+        type: Number,
+        required: true,
+        default: 0
     },
     content: String,
     image: String,
@@ -226,33 +257,24 @@ const groupLessonSchema = new mongoose.Schema({
     strokes: Number,
     club: String,
     feedback: String,
-    participants: Number,
-    created_date: {
-        type: Date,
-        default: Date.now
-    }
-});
-const GroupLesson = mongoose.model('GroupLesson', groupLessonSchema);
-
-// Group Lesson Participants Schema
-const groupLessonParticipantsSchema = new mongoose.Schema({
-    group_lesson_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'GroupLesson'
-    },
-    user_id: {
+    // 참가자 정보
+    participants: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    }],
+    // 남은 레슨 수
+    remaining_lesson: {
+        type: Number,
+        required: true,
+        default: 0 // 적절한 기본값 설정
     },
-    joined_date: Date,
-    status: String,
-    feedback: String,
     created_date: {
         type: Date,
         default: Date.now
     }
 });
-const GroupLessonParticipants = mongoose.model('GroupLessonParticipants', groupLessonParticipantsSchema);
+
+const GroupLesson = mongoose.model('GroupLesson', groupLessonSchema);
 
 module.exports = {
     User,
@@ -263,6 +285,5 @@ module.exports = {
     GolfCourse,
     ProReview,
     CourseReview,
-    GroupLesson,
-    GroupLessonParticipants
+    GroupLesson
 };
