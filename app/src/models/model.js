@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    golf_course_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'GolfCourse',
+        required: false
+    },
     created_date: {
         type: Date,
         default: Date.now

@@ -1,20 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { GolfCourse, Pro } = require('../../models/model');
+const { GolfCourse, User } = require('../../models/model');
 
-// 특정 프로의 골프 코스 정보를 조회하는 API
-router.get('/:proId', async (req, res) => {
+router.get('/:userId', async (req, res) => {
     try {
-        const proId = req.params.proId; // URL 파라미터에서 프로의 사용자 정의 ID 추출
-
-        // 사용자 정의 ID를 가진 프로 찾기
-        const pro = await Pro.findOne({ pro_id: proId });
-        if (!pro) {
-            return res.status(404).send('Pro not found');
+        const userId = req.params.userId;
+        const user = await User.findOne({ user_id: userId });
+        if (!user) {
+            return res.status(404).send('User not found');
         }
 
-        // 프로가 속한 골프 코스 정보 조회
-        const golfCourse = await GolfCourse.findById(pro.golf_course_id);
+        const golfCourse = await GolfCourse.findById(user.golf_course_id);
+
         if (!golfCourse) {
             return res.status(404).send('Golf Course not found');
         }
@@ -24,12 +21,7 @@ router.get('/:proId', async (req, res) => {
             googleMap: golfCourse.map_link, // 구글 맵 링크
             golfCourseName: golfCourse.name, // 골프 코스 이름
             address: golfCourse.address, // 주소
-            rating: golfCourse.rating, // 별점
-            proInfo: { // 프로 정보
-                proName: pro.name,
-                proDetailGolfCourse: pro.golf_course_id
-                // 추가적인 프로 정보 필요 시 여기에 포함
-            }
+            rating: golfCourse.rating // 별점
         };
 
         res.json(response);
