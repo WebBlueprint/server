@@ -54,6 +54,8 @@ const groupLessonsRouter = require('./lesson/groupLessons');
 const personalLessonsRouter = require('./lesson/personalLessons');
 const lessonReviewsRouter = require('./lesson/lessonReviews');
 const sendLessonReviewRouter = require('./lesson/sendLessonReview');
+const makeDrivingRangeReview = require('./lesson/makeDrivingRangeReview');
+const reschedule = require('./lesson/reschedule');
 
 router.use('/lesson/my-pro-list', myProListRouter);
 router.use('/lesson/make-review', makeReviewRouter);
@@ -62,5 +64,7 @@ router.use('/lesson/group-lessons', groupLessonsRouter);
 router.use('/lesson/personal-lessons', personalLessonsRouter);
 router.use('/lesson/lesson-reviews', lessonReviewsRouter);
 router.use('/lesson/send-lesson-review', sendLessonReviewRouter);
+router.use('/lesson/make-driving-range-review', makeDrivingRangeReview);
+router.use('/lesson/reschedule', reschedule);
 
 module.exports = router;
