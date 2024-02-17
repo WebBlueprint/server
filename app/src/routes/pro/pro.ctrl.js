@@ -1,5 +1,5 @@
 "use strict";
-const {Pro} = require('../../models/model');
+const { Pro } = require('../../models/model');
 const bcrypt = require('bcrypt');
 
 const view = {
@@ -48,6 +48,15 @@ const api = {
             await pro.save();
 
             res.status(201).json({ message: "프로가 성공적으로 등록되었습니다." });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    allpros: async (req, res) => {
+        try {
+            const allPros = await Pro.find({});
+            res.status(200).json(allPros);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
