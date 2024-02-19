@@ -16,8 +16,8 @@ const userSchema = new mongoose.Schema({
             required: false
         },
         coordinates: {
-            type: [Number], // [경도, 위도] 형식의 배열
-            required: false
+            lat: { type: Number, required: false },
+            lng: { type: Number, required: false }
         }
     },
     phone_num: String,
@@ -25,11 +25,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    golf_course_id: {
+    golf_course_ids: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'GolfCourse',
         required: false
-    },
+    }],
     created_date: {
         type: Date,
         default: Date.now
@@ -58,8 +58,8 @@ const proSchema = new mongoose.Schema({
             required: false
         },
         coordinates: {
-            type: [Number],
-            required: false
+            lat: { type: Number, required: false },
+            lng: { type: Number, required: false }
         }
     },
     height: Number,
@@ -174,8 +174,8 @@ const golfCourseSchema = new mongoose.Schema({
             required: true
         },
         coordinates: {
-            type: [Number],
-            required: true
+            lng: { type: Number, required: true },
+            lat: { type: Number, required: true }
         }
     },
     map_link: String,
@@ -188,8 +188,18 @@ const golfCourseSchema = new mongoose.Schema({
     }
 });
 
-// GeoJSON 인덱스 생성
-golfCourseSchema.index({ address: '2dsphere' });
+// GeoJSON 형식으로 변환하는 가상 필드
+golfCourseSchema.virtual('location').get(function () {
+    return {
+        type: 'Point',
+        coordinates: [this.address.coordinates.lng, this.address.coordinates.lat]
+    };
+});
+
+// 2dsphere 인덱스를 가상 필드에 적용
+golfCourseSchema.index({ "location": "2dsphere" });
+
+golfCourseSchema.set('toJSON', { virtuals: true });
 
 const GolfCourse = mongoose.model('GolfCourse', golfCourseSchema);
 

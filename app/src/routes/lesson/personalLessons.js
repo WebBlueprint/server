@@ -21,9 +21,10 @@ router.get('/:userId', async (req, res) => {
 
         // 데이터 포맷팅
         const formattedPersonalLessons = personalLessons.map(lesson => {
+            console.log(lesson);
             return {
-                proName: lesson.pro_id.name, // 프로 이름
-                location: lesson.place.name, // 위치
+                proName: lesson.pro_id ? lesson.pro_id.name : 'N/A', // 프로 이름
+                location: lesson.place ? lesson.place.name : 'N/A', // 위치
                 date: lesson.reservation_date, // 날짜
                 remaining_lesson: lesson.remaining_lesson, // 남은 레슨 수
                 status: lesson.status // 다가오는 레슨 여부
