@@ -56,6 +56,7 @@ const lessonReviewsRouter = require('./lesson/lessonReviews');
 const sendLessonReviewRouter = require('./lesson/sendLessonReview');
 const makeDrivingRangeReview = require('./lesson/makeDrivingRangeReview');
 const reschedule = require('./lesson/reschedule');
+const lessonId = require('./lesson/lessonId');
 
 router.use('/lesson/my-pro-list', myProListRouter);
 router.use('/lesson/make-review', makeReviewRouter);
@@ -66,5 +67,6 @@ router.use('/lesson/lesson-reviews', lessonReviewsRouter);
 router.use('/lesson/send-lesson-review', sendLessonReviewRouter);
 router.use('/lesson/make-driving-range-review', makeDrivingRangeReview);
 router.use('/lesson/reschedule', reschedule);
+router.use('/lesson/lesson-id', lessonId);
 
 module.exports = router;
