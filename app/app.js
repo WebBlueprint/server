@@ -28,9 +28,11 @@ app.set('view engine', 'ejs'); // EJS 템플릿 엔진 사용
 // 미들 웨어 등록
 app.use(cors({
     credentials: true,
+    origin: 'http://localhost:3006'
 }));
+
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Origin", 'http://localhost:3006');
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
