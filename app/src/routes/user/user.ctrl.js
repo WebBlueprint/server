@@ -18,10 +18,10 @@ const view = {
 const api = {
     login: async (req, res) => {
         try {
-            const user = await User.findOne({ user_id: req.body.user_id });
-            if (!user) return res.status(400).json({ message: "아이디를 찾을 수 없습니다." });
+            const userInfo = await User.findOne({ email: req.body.email });
+            if (!userInfo) return res.status(400).json({ message: "아이디를 찾을 수 없습니다." });
 
-            const validPassword = await bcrypt.compare(req.body.password, user.password);
+            const validPassword = await bcrypt.compare(req.body.password, userInfo.password);
             if (!validPassword) return res.status(400).json({ message: "잘못된 비밀번호입니다." });
             // 액세스토큰
             const accessToken = jwt.sign({
@@ -168,6 +168,7 @@ const api = {
             // 생년월일 형식 검사: YYYY-MM-DD
             const birthDateRegex = /^\d{4}-\d{2}-\d{2}$/;
             if (!birthDateRegex.test(birthDate)) {
+                console.log(birthDate)
                 return res.status(400).json({ message: "유효하지 않은 생년월일 형식입니다. (YYYY-MM-DD)" });
             }
 
